@@ -1,0 +1,71 @@
+<center>
+    <h3>Add User</h3>
+    <form method="post" action="/user/addRecord" enctype="multipart/form-data">
+        <table border="1">
+            <tr>
+                <td>Name :- </td>
+                <td>
+                    <input type="text" name="name">
+                </td>
+            </tr>
+            <tr>
+                <td>Email :- </td>
+                <td>
+                    <input type="text" name="email">
+                </td>
+            </tr>
+            <tr>
+                <td>Password :- </td>
+                <td>
+                    <input type="text" name="password">
+                </td>
+            </tr>
+            <tr>
+                <td>Gender :- </td>
+                <td>
+                    <input type="radio" name="gender" value="male">Male
+                    <input type="radio" name="gender" value="female">Female
+                </td>
+            </tr>
+            <tr>
+                <td>Hobby :- </td>
+                <td>
+                    <input type="checkbox" name="hobby" value="cricket">cricket
+                    <input type="checkbox" name="hobby" value="music">music
+                    <input type="checkbox" name="hobby" value="reading">reading
+                </td>
+            </tr>
+            <tr>
+                <td>City :- </td>
+                <td>
+                    <select name="city">
+                        <option>----select city----</option>
+                        <% city = ["surat","vadodara","ahemdabad","rajkot"] %>
+                        <% city.map((c)=>{ %>
+                            <option value="<%= c %>"><%= c %></option>
+                        <% }) %>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Phone :- </td>
+                <td>
+                    <input type="no" name="phone">
+                </td>
+            </tr>
+            <tr>
+                <td>Multiple Image :- </td>
+                <td>
+                    <input type="file" multiple name="images">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <a href="/user">View</a>
+</center>

@@ -1,0 +1,42 @@
+<center>
+    <h1>All User</h1>
+    <table border="1">
+        <tr>
+           <td>Srno</td>
+           <td>Name</td>
+           <td>Email</td>
+           <td>Password</td>
+           <td>Gender</td>
+           <td>Hobby</td>
+           <td>City</td>
+           <td>Phone</td>
+           <td>Image</td>
+           <td>Action</td>
+        </tr>
+
+        <% record.map((val,i)=>{i=i+1 %>
+            <tr>
+                <td><%= i %></td>
+                <td><%= val.name %></td>
+                <td><%= val.email %></td>
+                <td><%= val.password %></td>
+                <td><%= val.gender %></td>
+                <td><%= val.hobby %></td>
+                <td><%= val.city %></td>
+                <td><%= val.phone %></td>
+                <td>
+                    <% val.images.map((item)=>{ %>
+                        <img src="<%= item %>" width="100"/>
+                    <% }) %>
+                </td>
+                <td>
+                    <a href="/user/deleteUser?deleteId=<%= val.id %>">Delete</a> ||
+                    <a href="/user/editUser?editId=<%= val.id %>">Edit</a>
+                </td>
+                
+            </tr>
+        <% }) %>
+
+    </table>
+    <a href="user/add">Add</a>
+</center>
