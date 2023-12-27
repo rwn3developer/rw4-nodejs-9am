@@ -81,7 +81,7 @@ const editUser = (req,res) => {
 
 const updateRecord = (req,res) => {
     let id = req.body.editid;
-    if(req.files){
+    if(req.files.length != 0){
         //old image replace in folder
         userModel.findById(id).then((oldrecord)=>{
             oldrecord.images.map((item)=>{
@@ -119,6 +119,10 @@ const updateRecord = (req,res) => {
         //edit data
         userModel.findById(id).
         then((oldImage)=>{
+            let mimage = [];
+            oldImage.images.map((item)=>{
+                mimage.push(item)
+            })
             userModel.findByIdAndUpdate(id,{
                 name : req.body.name,
                 email : req.body.email,
@@ -127,7 +131,7 @@ const updateRecord = (req,res) => {
                 hobby : req.body.hobby,
                 city : req.body.city,
                 phone : req.body.phone,
-                image : oldImage.image
+                image : mimage
             }).then((success)=>{
                 console.log("record edit");
                 return res.redirect('/user');
@@ -139,8 +143,6 @@ const updateRecord = (req,res) => {
             console.log(err);
             return false;
         })
-
-        
     }
 }
 
