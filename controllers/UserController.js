@@ -2,15 +2,14 @@ const userModel = require('../models/userModel');
 
 const fs = require('fs');
 
-const index = (req,res) => {
-    userModel.find({})
-    .then((record)=>{
-        return res.render('index',{record});
-    }).catch((err)=>{
+const index = async(req,res) => {
+    try{
+        let allData = await userModel.find({});
+        return res.render('index',{record : allData});
+    }catch(err){
         console.log(err);
         return false;
-    })
-    
+    } 
 }
 
 const add = (req,res) => {
@@ -18,7 +17,8 @@ const add = (req,res) => {
 }
 
 
-const addRecord = (req,res) => {
+const addRecord = async(req,res) => {
+    try{
         let name = req.body.name;
         let email = req.body.email;
         let password = req.body.password;
@@ -35,36 +35,30 @@ const addRecord = (req,res) => {
         req.files.map((item)=>{
             mImages.push(item.path)
         })
-        
-    userModel.create({
-        name,email,password,gender,hobby,city,phone,images : mImages
-    }).then((success)=>{
-        console.log("user is successfully create");
-        return res.redirect('/user');
-    }).catch((err)=>{
-        console.log("user not add");
+        let insertData = await  userModel.create({
+            name,email,password,gender,hobby,city,phone,images : mImages
+        })
+        console.log("User Create");
+        return res.redirect('/user')
+    }catch(err){
+        console.log(err);
         return false;
-    })
+    }
 }
 
-const deleteUser = (req,res) => {
-    userModel.findById(req.query.deleteId).then((oldrecord)=>{
-        oldrecord.images.map((item)=>{
+const deleteUser = async(req,res) => {
+    try{
+        let removeFile = await userModel.findById(req.query.deleteId);
+        removeFile.images.map((item)=>{
             fs.unlinkSync(item);
-        });
-    }).catch((err)=>{
-        console.log(err);
-        return false;
-    })
-
-    userModel.findByIdAndDelete(req.query.deleteId).
-    then((success) => {
-        console.log("Record Delete");
+        })
+        let deleteRecord = await userModel.findByIdAndDelete(req.query.deleteId);
+        console.log("Record delete");
         return res.redirect('/user');
-    }).catch((err)=>{
+    }catch(err){
         console.log(err);
         return false;
-    })
+    }
 }
 
 const editUser = (req,res) => {
